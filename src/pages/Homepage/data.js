@@ -3,7 +3,7 @@ export const categories = [
     {
         id: 1,
         label: 'Drama',
-        posterUrl: 'https://lh3.googleusercontent.com/proxy/AIhrcuHcWt4h6T8D08wHeTB8bLz9-C9kafd8X3fENlFzZx0npwxXzsCxaW_uGB8Pl8NZi4WLLfLvQXwlSOLheBzFJv0iovc4rl6jQCJOdFU',
+        posterUrl: 'https://www.timeout.ru/img/%D0%9C%D0%B0%D1%80%D0%B8%D0%BD%D0%B0/01-36.jpg',
 
     },
     {
