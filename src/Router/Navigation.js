@@ -76,7 +76,7 @@ export const Navigation = () => {
                 </AppBar>
             </div>
             < Switch >
-                <Route path="/categories/:category">
+                <Route path="/category/:genre">
                     <MovieList />
                 </Route>
 

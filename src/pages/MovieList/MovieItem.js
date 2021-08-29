@@ -3,31 +3,46 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyle = makeStyles((theme) => ({
-    item: {
-        maxWidth: '20%'
-    },
     card: {
         width: '100%',
-        maxHeight: '200px'
+        maxHeight: '400px'
     },
     media: {
-        height: '140px'
+        minHeight:'300px',
+    },
+    content: {
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    },
+    text: {
+        fontSize:'16px',
+        color: 'white'
+    },
+    subtext: {
+        fontSize: '12px',
+        color: 'white'
     }
 }))
 
-export const MovieItem = (props) => {
+export const MovieItem = ({movie}) => {
     const classes = useStyle()
 
     return (
-        <Grid item xs={5} className={classes.item}>
+        <Grid item xs={6} sm={3} className={classes.item}>
             <Card className={classes.card}>
                 <CardActionArea>
-                    <CardMedia image='https://img.kupigolos.ru/hero/5cdb2ac7c6c44.jpg?p=bh&s=700cb5277d74ccb0bb961bae1f03f550' className={classes.media} />
+                    <CardMedia image={movie.poster} className={classes.media} />
                 </CardActionArea>
-                <CardContent>
-                    <Typography>
-                        {props.movie.title}
+                <CardContent className={classes.content}>
+                    <Typography className={classes.text}>
+                        {movie.title}
                     </Typography>
+                    <Typography className={classes.subtext}>
+                        {movie.genre}
+                    </Typography>
+                    <Typography className={classes.subtext}>
+                        {movie.year}
+                    </Typography>
+                   
                 </CardContent>
             </Card>
         </Grid>

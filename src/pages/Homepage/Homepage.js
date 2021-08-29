@@ -15,7 +15,7 @@ export const Homepage = () => {
         return categories.map(item => {
             return (
                 <Grid item xs={4} key={item.id}>
-                    <Link to={`/categories/${item.label}`} style={{ textDecoration: 'none' }}>
+                    <Link to={`/category/${item.label}`} style={{ textDecoration: 'none' }}>
                         <Paper className={classes.card} style={{ background: `url(${item.posterUrl}) center/cover` }}>
                             <Typography variant='h4' className={classes.cardText}>
                                 {item.label}

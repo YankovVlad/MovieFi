@@ -8,44 +8,29 @@ import { MovieItem } from "./MovieItem";
 
 export const MovieList = () => {
 
-    const { category } = useParams()
-    const [movies, setMovies] = useState([])
+    const { genre } = useParams()
+    const [movies, setMovies] = useState()
 
-    const getMovie = () => {
-        const options = {
-            method: 'GET',
-            url: 'https://movies-tvshows-data-imdb.p.rapidapi.com/',
-            params: { type: 'get-popular-movies', page: '1', year: '2020' },
-            headers: {
-                'x-rapidapi-key': '7de3c41803msh53a39f3c55f01aap1fd699jsn2b244a9fd097',
-                'x-rapidapi-host': 'movies-tvshows-data-imdb.p.rapidapi.com'
-            }
-        };
+    const getMoviesByGenre = async (genre) => {
+        const response = await axios.get(`http://localhost:3004/movies?genre_like=${genre}`,)
+        setMovies(response.data)
+        console.log(response.data)
 
-        axios.request(options).then(function (response) {
-            setMovies(response.data.movie_results);
-        }).catch(function (error) {
-            console.error(error);
-        });
     }
-
 
     useEffect(() => {
-        getMovie()
-    }, [])
+        console.log(genre)
+        getMoviesByGenre(genre)
+    },[])
 
-    const getMovieItem = (arr) => {
-        return arr.map(movie => {
-            return (
-                <MovieItem key={movie.imdb_id} movie={movie} />
-            )
-        })
-        console.log(movies)
-    }
     return (
         <Container>
-            <Grid container spacing={1}>
-                {getMovieItem(movies)}
+            <Grid container spacing={2}>
+            {movies?.map(movie => {
+                return (
+                    <MovieItem key={movie.imdb_id} movie={movie} />
+                )
+            })}
             </Grid>
         </Container>
 
