@@ -14,10 +14,12 @@ const useStyle = makeStyles((theme) => ({
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
     },
     text: {
+        fontFamily: 'Montserrat, sans-serif',
         fontSize:'16px',
         color: 'white'
     },
     subtext: {
+        fontFamily: 'Montserrat, sans-serif',
         fontSize: '12px',
         color: 'white'
     }
@@ -28,23 +30,26 @@ export const MovieItem = ({movie}) => {
 
     return (
         <Grid item xs={6} sm={3} className={classes.item}>
-            <Card className={classes.card}>
-                <CardActionArea>
-                    <CardMedia image={movie.poster} className={classes.media} />
-                </CardActionArea>
-                <CardContent className={classes.content}>
-                    <Typography className={classes.text}>
-                        {movie.title}
-                    </Typography>
-                    <Typography className={classes.subtext}>
-                        {movie.genre}
-                    </Typography>
-                    <Typography className={classes.subtext}>
-                        {movie.year}
-                    </Typography>
-                   
-                </CardContent>
-            </Card>
+            <Link to={`/movie/${movie.imdb_id}`} style={{textDecoration: 'none'}}>
+
+                <Card className={classes.card}>
+                    <CardActionArea>
+                        <CardMedia image={movie.poster} className={classes.media} />
+                    </CardActionArea>
+                    <CardContent className={classes.content}>
+                        <Typography className={classes.text}>
+                            {movie.title}
+                        </Typography>
+                        <Typography className={classes.subtext}>
+                            {movie.genre}
+                        </Typography>
+                        <Typography className={classes.subtext}>
+                            {movie.year}
+                        </Typography>
+                    
+                    </CardContent>
+                </Card>
+            </Link>
         </Grid>
     )
 }

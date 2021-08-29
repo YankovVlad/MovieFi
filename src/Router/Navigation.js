@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { Homepage } from "../pages/Homepage/Homepage";
 import { MovieList } from "../pages/MovieList/MovieList.js";
+import { Movie } from "../pages/Movie/Movie";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,6 +79,10 @@ export const Navigation = () => {
             < Switch >
                 <Route path="/category/:genre">
                     <MovieList />
+                </Route>
+
+                <Route path="/movie/:id">
+                    <Movie />
                 </Route>
 
                 <Route path="/">

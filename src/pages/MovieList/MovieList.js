@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import axios from "axios";
 
 import { Container, Box, Typography, Grid, Paper } from '@material-ui/core';
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { MovieItem } from "./MovieItem";
 
 export const MovieList = () => {
@@ -19,7 +19,6 @@ export const MovieList = () => {
     }
 
     useEffect(() => {
-        console.log(genre)
         getMoviesByGenre(genre)
     },[])
 
@@ -28,7 +27,7 @@ export const MovieList = () => {
             <Grid container spacing={2}>
             {movies?.map(movie => {
                 return (
-                    <MovieItem key={movie.imdb_id} movie={movie} />
+                <MovieItem key={movie.imdb_id} movie={movie} />
                 )
             })}
             </Grid>
