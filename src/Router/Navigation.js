@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Homepage } from "../pages/Homepage/Homepage";
 import { MovieList } from "../pages/MovieList/MovieList.js";
 import { Movie } from "../pages/Movie/Movie";
+import { AboutUs } from "../pages/AboutUs/AboutUs";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -69,7 +70,7 @@ export const Navigation = () => {
                             <Box className={classes.box}>
                                 <Link to='/' className={classes.link}> Home </Link>
                                 <Link to='/profile' className={classes.link}> Profile </Link>
-                                <Link to='/about' className={classes.link}> About </Link>
+                                <Link to='/about' className={classes.link}> About Us</Link>
                             </Box>
                         </Container>
 
@@ -83,6 +84,10 @@ export const Navigation = () => {
 
                 <Route path="/movie/:id">
                     <Movie />
+                </Route>
+
+                <Route path="/about">
+                    <AboutUs />
                 </Route>
 
                 <Route path="/">

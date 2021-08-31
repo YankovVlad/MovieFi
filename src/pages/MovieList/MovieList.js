@@ -14,7 +14,6 @@ export const MovieList = () => {
     const getMoviesByGenre = async (genre) => {
         const response = await axios.get(`http://localhost:3004/movies?genre_like=${genre}`,)
         setMovies(response.data)
-        console.log(response.data)
 
     }
 
@@ -24,7 +23,7 @@ export const MovieList = () => {
 
     return (
         <Container>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
             {movies?.map(movie => {
                 return (
                 <MovieItem key={movie.imdb_id} movie={movie} />

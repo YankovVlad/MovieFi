@@ -20,8 +20,8 @@ export const categories = [
     },
     {
         id: 4,
-        label: 'Detective',
-        posterUrl: 'https://www.irishnews.com/picturesarchive/irishnews/irishnews/2016/04/06/163409895-54c527b3-d34c-4d92-813a-faef1a8002a4.jpg',
+        label: 'Animation',
+        posterUrl: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bam-incredibles-resize-1537212803.jpg?crop=0.689xw:1.00xh;0.107xw,0&resize=480:*',
 
     },
     {
