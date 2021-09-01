@@ -34,7 +34,7 @@ export const Homepage = () => {
 
     return (
         <div className={classes.root}>
-            <Container className={classes.container}>
+            <Container className={classes.container} >
                 <img src={'https://cdn.pixabay.com/photo/2017/01/18/21/49/singapore-1990959_960_720.jpg'}
                     alt={'poster'} className={classes.box__img} />
                 <Box className={classes.box}>

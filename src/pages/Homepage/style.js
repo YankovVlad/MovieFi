@@ -63,5 +63,12 @@ export const useStyle = makeStyles((theme) => ({
     },
     cardText: {
         zIndex: '100'
-    }
+    },
+    input: {
+        width: '50%',
+    },
+    textColor: {
+       color:'white',
+       
+    },
 }))
