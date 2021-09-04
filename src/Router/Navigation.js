@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,13 +7,20 @@ import {
     Link,
 } from "react-router-dom";
 
-import { AppBar, Box, Container, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Box, Container, Button, Toolbar, Typography } from "@material-ui/core";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Homepage } from "../pages/Homepage/Homepage";
 import { MovieList } from "../pages/MovieList/MovieList.js";
 import { Movie } from "../pages/Movie/Movie";
 import { AboutUs } from "../pages/AboutUs/AboutUs";
+import { Profile } from "../pages/Profile/Propfile";
+import { LoginDialog } from "../components/LoginDialog/LoginDialog";
+import { useDispatch, useSelector } from "react-redux";
+import { ACTIONS_TYPES } from "../constants/constants";
+import { RegDialog } from "../components/RegDialog/RegDialog";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,12 +54,32 @@ const useStyles = makeStyles((theme) => ({
             color: 'red',
             borderBottom: '2px solid red',
         }
+    },
+    button: {
+        wordWrap: 'normal',
+        margin: '0 1rem'
     }
 })
 )
 
 export const Navigation = () => {
     const classes = useStyles()
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.user)
+
+    const onClickOpenLogin = () => {
+        dispatch({type: ACTIONS_TYPES.OPEN_DIALOG_LOGIN})
+    }
+   
+    const onClickOpenRegistration = () => {
+        dispatch({type: ACTIONS_TYPES.OPEN_DIALOG_REGISTRATION})
+    }
+    const onClickLogout = () => {
+        dispatch({type: ACTIONS_TYPES.LOGOUT_USER})
+        sessionStorage.removeItem('jwt')
+        sessionStorage.removeItem('user')
+    }
+   
 
 
     return (
@@ -73,7 +100,21 @@ export const Navigation = () => {
                                 <Link to='/about' className={classes.link}> About Us</Link>
                             </Box>
                         </Container>
-
+                        {user ? 
+                        (<>
+                            {console.log(user)}
+                            <Typography>{user.nickname}</Typography>
+                            <Button color="primary" onClick={onClickLogout} className={classes.button}>Log Out</Button>
+                        </>
+                        ) :
+                        (<>
+                            <Button color="primary" onClick={onClickOpenLogin} className={classes.button}>Log In</Button>
+                            <Button color="secondary" onClick={onClickOpenRegistration} className={classes.button}>Sign In</Button>
+                        </>)
+                        }
+                        
+                        <LoginDialog />
+                        <RegDialog />
                     </Toolbar>
                 </AppBar>
             </div>
@@ -88,6 +129,13 @@ export const Navigation = () => {
 
                 <Route path="/about">
                     <AboutUs />
+                </Route>
+
+                <Route path="/profile">
+                    <Profile 
+                        onClickOpenLogin={onClickOpenLogin}
+                        onClickOpenRegistration={onClickOpenRegistration}
+                    />
                 </Route>
 
                 <Route path="/">

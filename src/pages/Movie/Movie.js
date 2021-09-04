@@ -35,7 +35,7 @@ export const Movie = () => {
     const classes = useStyles()
     const { id } = useParams()
     const [movie, setMovie] = useState([])
-    // const [trailer, setTrailer] = useState([])
+
 
     const options = {
         method: 'GET',
@@ -46,26 +46,12 @@ export const Movie = () => {
           'x-rapidapi-key': '7de3c41803msh53a39f3c55f01aap1fd699jsn2b244a9fd097'
         }
       };
-      // const trailerOptions = {
-      //   method: 'GET',
-      //   url: `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${id}`,
-      //   headers: {
-      //     'x-rapidapi-host': 'imdb-internet-movie-database-unofficial.p.rapidapi.com',
-      //     'x-rapidapi-key': '7de3c41803msh53a39f3c55f01aap1fd699jsn2b244a9fd097'
-      //   }
-      // };
       
       const getMovie = async () => {
           const response = await axios.request(options).then((response) => {
           setMovie(response.data)
        }) 
       }
-
-      // const getTrailer = async () => {
-      //   const response = await axios.request(trailerOptions).then((response) => {
-      //     setTrailer(response.data)
-      //   })
-      // }
 
       useEffect(() => {
           getMovie()
