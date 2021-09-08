@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import { Container, makeStyles, Typography, Box, Grid } from '@material-ui/core'
+import { Container, makeStyles, Typography, Box, Grid, TextField, Button } from '@material-ui/core'
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     title: {
       margin: '2rem 0',
       fontFamily: 'Montserrat, sans-serif',
-      color: 'white'
     },
     subtitle: {
       margin: '1rem 0',
       fontFamily: 'Montserrat, sans-serif',
-      color: 'white'
     },
     header: {
       width: '100%',
@@ -23,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     },
     text:{
       marginBottom:'2px',
-      color: 'white',
       fontFamily: 'Montserrat, sans-serif',
 
     },
@@ -34,7 +32,11 @@ export const Movie = () => {
 
     const classes = useStyles()
     const { id } = useParams()
+    const user = useSelector((state) => state.user)
+
     const [movie, setMovie] = useState([])
+    const [reviews, setReviews] = useState([])
+    const [textReview, setTextReview] = useState('')
 
 
     const options = {
@@ -52,15 +54,43 @@ export const Movie = () => {
           setMovie(response.data)
        }) 
       }
+      const getReview = async () => {
+        const response = await axios.get(`http://localhost:3004/reviews?imdbId=${id}`).then((response) => {
+          setReviews(response.data.reverse())
+        })
+      }
+      const createReview = async () => {
+        const response = await axios.post('http://localhost:3004/reviews', {
+          imdbId: id,
+          text: textReview,
+          author: user.id
+        })
+      }
+      // const createReviewUser = async () => {
+      //   const response = await axios.post(`http://localhost:3004/users?id=${user.id}`, {
+      //     imdbId: id,
+      //     text: textReview,
+      //   })
+      // }
+      const onChangeReview = (event) => {
+        setTextReview(event.target.value)
+      }
+      const onClickButtonPost = async () => {
+        createReview()
+        setTextReview('')
+        getReview()
+      }
 
       useEffect(() => {
           getMovie()
+          getReview()
           // getTrailer()
       }, [])
 
     return (
       
        <Container>
+         {console.log('render')}
          <Typography variant='h2' className={classes.title}>
           {movie.Title}
         </Typography >
@@ -91,7 +121,7 @@ export const Movie = () => {
            <Typography variant='h4' className={classes.subtitle}>
               Synopsis
            </Typography>
-           <Typography variant='p' className={classes.text}>
+           <Typography className={classes.text}>
               {movie.Plot}
            </Typography>
          </Box>
@@ -105,6 +135,40 @@ export const Movie = () => {
            </Container>
            
          </Box> */}
+
+         <Box>
+           <Typography variant='h4' className={classes.subtitle}>
+             Reviews
+           </Typography>
+          
+          {user ?
+          <>
+            <TextField 
+          id="standard-basic" 
+          label="Standard" 
+          multiline 
+          row={3} 
+          fullWidth
+          onChange={onChangeReview}
+          value={textReview}
+          margin='dense'
+          />
+          
+           <Button margin='dense' variant="contained" color="primary" onClick={onClickButtonPost}>
+           Write it!
+          </Button>
+          </> :
+          ''
+          }
+         
+         
+           {reviews.map((review) => {
+             return (
+               <Typography key={review.id} margin='dense'>{review.text}</Typography>
+             )
+           })}
+
+        </Box>
        </Container>
     )
 }

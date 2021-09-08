@@ -30,8 +30,6 @@ export const Homepage = () => {
         })
     }
 
-
-
     return (
         <div className={classes.root}>
             <Container className={classes.container} >

@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS_TYPES } from "../../constants/constants";
-import { registerUser } from "../../requests/requests";
+import { registerUser } from "../../actions";
 import { EmailTwoTone } from "@material-ui/icons";
 
 

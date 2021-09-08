@@ -21,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS_TYPES } from "../constants/constants";
 import { RegDialog } from "../components/RegDialog/RegDialog";
 
+import { openLogin, openRegistration, logout } from "../actions";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,25 +69,26 @@ export const Navigation = () => {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user)
 
+    
+
     const onClickOpenLogin = () => {
-        dispatch({type: ACTIONS_TYPES.OPEN_DIALOG_LOGIN})
+        dispatch(openLogin())
     }
    
     const onClickOpenRegistration = () => {
-        dispatch({type: ACTIONS_TYPES.OPEN_DIALOG_REGISTRATION})
+        dispatch(openRegistration())
     }
+
     const onClickLogout = () => {
-        dispatch({type: ACTIONS_TYPES.LOGOUT_USER})
-        sessionStorage.removeItem('jwt')
-        sessionStorage.removeItem('user')
+        dispatch(logout()) 
     }
    
 
 
     return (
         <Router>
-            <div className={classes.root}>
-                <AppBar position='static' className={classes.nav}>
+            <div className={classes.root} >
+                <AppBar position='static' className={classes.nav} >
                     <Toolbar>
                         <Typography variant='h5' className={classes.title}>
                             Movie
@@ -102,7 +105,6 @@ export const Navigation = () => {
                         </Container>
                         {user ? 
                         (<>
-                            {console.log(user)}
                             <Typography>{user.nickname}</Typography>
                             <Button color="primary" onClick={onClickLogout} className={classes.button}>Log Out</Button>
                         </>
