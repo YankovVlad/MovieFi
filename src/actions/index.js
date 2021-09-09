@@ -43,3 +43,26 @@ export const getMoviesByGenre = (genre) => {
     } 
 } 
 
+// // Movie
+
+// export const createReview = async () => {
+//     const response = await axios.post('http://localhost:3004/reviews', {
+//       imdbId: id,
+//       text: textReview,
+//       author: user.id
+//     })
+// }
+// export  const getReview = async () => {
+//     const response = await axios.get(`http://localhost:3004/reviews?imdbId=${id}`).then((response) => {
+    
+//         dispatch({type: ACTIONS_TYPES.LOADING_START})
+//         dispatch({type: ACTIONS_TYPES.GET_REVIEW, payload: response.data.reverse()})
+    
+//     })
+// }
+// export const getMovie = async () => {
+//     const response = await axios.request(options).then((response) => {
+//     setMovie(response.data)
+//  }) 
+// }
+
