@@ -33,8 +33,10 @@ export const Homepage = () => {
     return (
         <div className={classes.root}>
             <Container className={classes.container} >
-                <img src={'https://cdn.pixabay.com/photo/2017/01/18/21/49/singapore-1990959_960_720.jpg'}
+                <img src={'https://www.teahub.io/photos/full/299-2993546_marvel-deadpool-movie-wallpaper-deadpool-png.jpg'}
                     alt={'poster'} className={classes.box__img} />
+                    {/* <img src={'https://www.pixel4k.com/wp-content/uploads/2018/10/venom-and-carnage-artwork_1538785901.jpg'}
+                    alt={'poster'} className={classes.box__img} /> */}
                 <Box className={classes.box}>
                     <Typography variant='h2' className={classes.box__title}>
                         LETS FIND YOUR MOVIE

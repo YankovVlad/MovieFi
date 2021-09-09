@@ -13,7 +13,6 @@ export const useStyle = makeStyles((theme) => ({
         maxWidth: '1440px',
         height: '50vw',
         marginBottom: '40px',
-        background: '#000012'
     },
     box: {
 
@@ -35,11 +34,11 @@ export const useStyle = makeStyles((theme) => ({
     },
     box__title: {
         width: '40%',
-        color: 'white'
+        textShadow: '5px 5px 7px grey'
     },
     subtitle: {
-        color: 'white',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        textShadow: '2px 2px 5px grey'
     },
     findInput: {
         width: '40%',

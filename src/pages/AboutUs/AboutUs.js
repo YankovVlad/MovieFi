@@ -5,7 +5,6 @@ const useStyles = makeStyles((theme) => ({
     text: {
         margin: '2rem 0',
         fontFamily: 'Montserrat, sans-serif',
-        color: 'white', 
     },
 }))
 

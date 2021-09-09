@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     text: {
-        color: 'white'
+        
     }
 }))
 
