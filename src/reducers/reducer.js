@@ -11,6 +11,9 @@ const initialState = {
     loginEmail: '',
     loginPassword: '',
     user: null,
+
+    movieList: [],
+    error: {}
 }
 
 export const reducer = (state = initialState, action) => {
@@ -31,6 +34,9 @@ export const reducer = (state = initialState, action) => {
         case ACTIONS_TYPES.RESET_FORM_LOGIN: return {...state, loginEmail: '', loginPassword: ''}
         case ACTIONS_TYPES.AUTH_USER: return {...state, user: action.payload}
         case ACTIONS_TYPES.LOGOUT_USER: return {...state, user: null}
+
+        case ACTIONS_TYPES.LOADING_SUCCESS: return {...state, movieList: action.payload}
+        case ACTIONS_TYPES.LOADING_FAILURE: return {...state, error: action.payload}
     }
     return state
 }

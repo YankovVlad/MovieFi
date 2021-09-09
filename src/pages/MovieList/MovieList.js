@@ -5,17 +5,15 @@ import axios from "axios";
 import { Container, Box, Typography, Grid, Paper } from '@material-ui/core';
 import { Link, useParams } from 'react-router-dom'
 import { MovieItem } from "./MovieItem";
+import { ACTIONS_TYPES } from "../../constants/constants";
+import { getMoviesByGenre } from '../../actions'
+import { useSelector } from "react-redux";
 
 export const MovieList = () => {
 
     const { genre } = useParams()
-    const [movies, setMovies] = useState()
-
-    const getMoviesByGenre = async (genre) => {
-        const response = await axios.get(`http://localhost:3004/movies?genre_like=${genre}`,)
-        setMovies(response.data)
-
-    }
+    // const [movies, setMovies] = useState()
+    const movies = useSelector((state) => state.movieList)
 
     useEffect(() => {
         getMoviesByGenre(genre)
