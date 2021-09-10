@@ -8,11 +8,15 @@ const initialState = {
     registrationEmail: '',
     registrationPassword: '',
 
+    loading: false,
+    loadingElement: false,
     loginEmail: '',
     loginPassword: '',
     user: null,
 
     movieList: [],
+    movieDetails: {},
+    reviews: [],
     error: {}
 }
 
@@ -35,8 +39,17 @@ export const reducer = (state = initialState, action) => {
         case ACTIONS_TYPES.AUTH_USER: return {...state, user: action.payload}
         case ACTIONS_TYPES.LOGOUT_USER: return {...state, user: null}
 
-        case ACTIONS_TYPES.LOADING_SUCCESS: return {...state, movieList: action.payload}
-        case ACTIONS_TYPES.LOADING_FAILURE: return {...state, error: action.payload}
+        case ACTIONS_TYPES.LOADING_START: return {...state, loading: true}
+        case ACTIONS_TYPES.LOADING_SUCCESS: return {...state, loading: false}
+        case ACTIONS_TYPES.LOADING_FAILURE: return {...state, loading: false, error: action.payload}
+
+        case ACTIONS_TYPES.LOADING_ELEMENT_START: return {...state, loadingElement: true}
+        case ACTIONS_TYPES.LOADING_ELEMENT_SUCCESS: return {...state, loadingElement: false}
+        case ACTIONS_TYPES.LOADING_ELEMENT_FAILURE: return {...state, loadingElement: false, errorElement: action.payload}
+
+        case ACTIONS_TYPES.GET_MOVIE_LIST: return {...state, movieList: action.payload}
+        case ACTIONS_TYPES.GET_MOVIE_DETAILS: return {...state, movieDetails: action.payload}
+        case ACTIONS_TYPES.GET_REVIEW: return {...state, reviews: action.payload}
     }
     return state
 }

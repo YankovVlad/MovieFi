@@ -1,25 +1,28 @@
 
-import React, { useEffect, useState } from "react"
-import axios from "axios";
+import React, { useEffect, } from "react"
 
-import { Container, Box, Typography, Grid, Paper } from '@material-ui/core';
-import { Link, useParams } from 'react-router-dom'
+import { Container, Grid} from '@material-ui/core';
+import { useParams } from 'react-router-dom'
 import { MovieItem } from "./MovieItem";
-import { ACTIONS_TYPES } from "../../constants/constants";
 import { getMoviesByGenre } from '../../actions'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Loader } from "../../components/Loader/Loader";
 
 export const MovieList = () => {
 
     const { genre } = useParams()
-    // const [movies, setMovies] = useState()
+    const dispatch = useDispatch()
     const movies = useSelector((state) => state.movieList)
+    const loading = useSelector((state) => state.loading)
 
     useEffect(() => {
-        getMoviesByGenre(genre)
-    },[])
+       dispatch(getMoviesByGenre(genre)) 
+    },[dispatch, genre])
 
     return (
+        <>
+        {loading ?
+        <Loader/> :
         <Container>
             <Grid container spacing={1}>
             {movies?.map(movie => {
@@ -29,6 +32,9 @@ export const MovieList = () => {
             })}
             </Grid>
         </Container>
+    }
+        </>
+        
 
     )
 }

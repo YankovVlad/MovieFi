@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { getMovie, getReview, createReview } from '../../actions'
+
 import { Container, makeStyles, Typography, Box, Grid, TextField, Button } from '@material-ui/core'
-import { useSelector } from 'react-redux'
+import { Loader } from '../../components/Loader/Loader'
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -30,90 +34,62 @@ const useStyles = makeStyles((theme) => ({
 
 export const Movie = () => {
 
+    const dispatch = useDispatch()
     const classes = useStyles()
     const { id } = useParams()
-    const user = useSelector((state) => state.user)
 
-    const [movie, setMovie] = useState([])
-    const [reviews, setReviews] = useState([])
+    const user = useSelector((state) => state.user)
+    const loading = useSelector((state) => state.loading)
+    const loadingElement = useSelector((state) => state.loadingElement)
+    const movieDetails = useSelector((state) => state.movieDetails)
+    const reviews = useSelector((state) => state.reviews)
+
     const [textReview, setTextReview] = useState('')
 
-
-    const options = {
-        method: 'GET',
-        url: 'https://movie-database-imdb-alternative.p.rapidapi.com/',
-        params: {i: id, r: 'json'},
-        headers: {
-          'x-rapidapi-host': 'movie-database-imdb-alternative.p.rapidapi.com',
-          'x-rapidapi-key': '7de3c41803msh53a39f3c55f01aap1fd699jsn2b244a9fd097'
-        }
-      };
-      
-      const getMovie = async () => {
-          const response = await axios.request(options).then((response) => {
-          setMovie(response.data)
-       }) 
-      }
-      const getReview = async () => {
-        const response = await axios.get(`http://localhost:3004/reviews?imdbId=${id}`).then((response) => {
-          setReviews(response.data.reverse())
-        })
-      }
-      const createReview = async () => {
-        const response = await axios.post('http://localhost:3004/reviews', {
-          imdbId: id,
-          text: textReview,
-          author: user.id
-        })
-      }
-      // const createReviewUser = async () => {
-      //   const response = await axios.post(`http://localhost:3004/users?id=${user.id}`, {
-      //     imdbId: id,
-      //     text: textReview,
-      //   })
-      // }
       const onChangeReview = (event) => {
         setTextReview(event.target.value)
       }
       const onClickButtonPost = async () => {
-        createReview()
+        dispatch(createReview(id, textReview, user.id))
         setTextReview('')
-        getReview()
+        dispatch(getReview(id))
       }
 
       useEffect(() => {
-          getMovie()
-          getReview()
-          // getTrailer()
-      }, [])
+          dispatch(getMovie(id))
+          dispatch(getReview(id))
+      }, [dispatch, id])
+
 
     return (
-      
-       <Container>
-         {console.log('render')}
-         <Typography variant='h2' className={classes.title}>
-          {movie.Title}
-        </Typography >
+      <>
+      {loading ? 
+        <Loader /> :
+        (<Container>
+         
+          <Typography variant='h2' className={classes.title}>
+            {movieDetails.Title}
+          </Typography >
          <Grid container className={classes.header}>
-            <Grid item xs={1} md={4} className={classes.poster} style={{background: `url(${movie.Poster}) no-repeat`}}>
+            <Grid item xs={1} md={4} className={classes.poster} style={{background: `url(${movieDetails.Poster}) no-repeat`}}>
               
             </Grid>
             <Grid item xs className={classes.info}>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Year: </span>{movie.Year}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Rated: </span>{movie.Rated}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Release: </span>{movie.Released}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Release DVD: </span>{movie.DVD}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Runtime: </span>{movie.Runtime}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Genre: </span>{movie.Genre}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Director: </span> {movie.Director}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Writer: </span> {movie.Writer}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Actors: </span> {movie.Actors}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Language: </span> {movie.Language}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Country: </span> {movie.Country}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Awards: </span> {movie.Awards}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Metascore: </span> {movie.Metascore}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>IMDB Rating: </span> {movie.imdbRating}</Typography>
-            <Typography className={classes.text}><span style={{color: 'red'}}>Production: </span> {movie.Production}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Year: </span>{movieDetails.Year}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Rated: </span>{movieDetails.Rated}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Release: </span>{movieDetails.Released}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Release DVD: </span>{movieDetails.DVD}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Runtime: </span>{movieDetails.Runtime}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Genre: </span>{movieDetails.Genre}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Director: </span> {movieDetails.Director}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Writer: </span> {movieDetails.Writer}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Actors: </span> {movieDetails.Actors}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Language: </span> {movieDetails.Language}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Country: </span> {movieDetails.Country}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Awards: </span> {movieDetails.Awards}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Metascore: </span> {movieDetails.Metascore}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>IMDB Rating: </span> {movieDetails.imdbRating}</Typography>
+            <Typography className={classes.text}><span style={{color: 'red'}}>Production: </span> {movieDetails.Production}</Typography>
             </Grid>
             
          </Grid>
@@ -122,19 +98,9 @@ export const Movie = () => {
               Synopsis
            </Typography>
            <Typography className={classes.text}>
-              {movie.Plot}
+              {movieDetails.Plot}
            </Typography>
          </Box>
-
-         {/* <Box>
-           <Typography variant='h4' className={classes.subtitle}>
-              Trailer
-           </Typography>
-           <Container>
-             <video src={trailer.trailer?.link} controls preload='metadata' poster={trailer.poster} width='800px' height='600px'/>
-           </Container>
-           
-         </Box> */}
 
          <Box>
            <Typography variant='h4' className={classes.subtitle}>
@@ -157,18 +123,21 @@ export const Movie = () => {
            <Button margin='dense' variant="contained" color="primary" onClick={onClickButtonPost}>
            Write it!
           </Button>
-          </> :
-          ''
+          </> : ''
           }
-         
-         
-           {reviews.map((review) => {
-             return (
-               <Typography key={review.id} margin='dense'>{review.text}</Typography>
-             )
-           })}
+          {loadingElement ? 
+            <Loader /> :
+            reviews.map((review) => {
+              return (
+                <Typography key={review.id} margin='dense'>{review.text}</Typography>
+              )
+            })
+        }
 
         </Box>
-       </Container>
+       </Container>)
+      }
+      
+      </> 
     )
 }

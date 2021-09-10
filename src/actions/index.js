@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { ACTIONS_TYPES } from '../constants/constants'
 
+
 // Navigation
 
 export const openLogin = () => {
@@ -30,14 +31,12 @@ export const registerUser = async (body) => {
 
 export const getMoviesByGenre = (genre) => {
     return async (dispatch) => {
-        console.log()
         try {
             dispatch({type: ACTIONS_TYPES.LOADING_START})
-            console.log('try')
             const response = await axios.get(`http://localhost:3004/movies?genre_like=${genre}`)
-            dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS, payload: response.data})
+            dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
+            dispatch({type: ACTIONS_TYPES.GET_MOVIE_LIST, payload: response.data})
         } catch (err) {
-            console.log('err', err.response)
             dispatch({type: ACTIONS_TYPES.LOADING_FAILURE, payload: err.response.data})
         }
     } 
@@ -45,24 +44,49 @@ export const getMoviesByGenre = (genre) => {
 
 // // Movie
 
-// export const createReview = async () => {
-//     const response = await axios.post('http://localhost:3004/reviews', {
-//       imdbId: id,
-//       text: textReview,
-//       author: user.id
-//     })
-// }
-// export  const getReview = async () => {
-//     const response = await axios.get(`http://localhost:3004/reviews?imdbId=${id}`).then((response) => {
-    
-//         dispatch({type: ACTIONS_TYPES.LOADING_START})
-//         dispatch({type: ACTIONS_TYPES.GET_REVIEW, payload: response.data.reverse()})
-    
-//     })
-// }
-// export const getMovie = async () => {
-//     const response = await axios.request(options).then((response) => {
-//     setMovie(response.data)
-//  }) 
-// }
+export const createReview = (id, textReview, author) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: ACTIONS_TYPES.LOADING_START})
+            const response = await axios.post('http://localhost:3004/reviews', {
+                imdbId: id,
+                text: textReview,
+                author: author
+            })
+            dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
+        } catch (err) {
+            dispatch({type: ACTIONS_TYPES.LOADING_FAILURE, payload: err.response.data})
+        }
+    }
+}
+export const getReview = (id) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.get(`http://localhost:3004/reviews?imdbId=${id}`)
+            dispatch({type: ACTIONS_TYPES.GET_REVIEW, payload: response.data.reverse()})
+        } catch (err) {
+            dispatch({type: ACTIONS_TYPES. LOADING_ELEMENT_FAILURE, payload: err.response.data})
+        }
+    }
+}
+export const getMovie = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: ACTIONS_TYPES.LOADING_START})
+            const response = await axios.request({
+                method: 'GET',
+                url: 'https://movie-database-imdb-alternative.p.rapidapi.com/',
+                params: {i: id, r: 'json'},
+                headers: {
+                  'x-rapidapi-host': 'movie-database-imdb-alternative.p.rapidapi.com',
+                  'x-rapidapi-key': '7de3c41803msh53a39f3c55f01aap1fd699jsn2b244a9fd097'
+                }
+                })
+            dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
+            dispatch({type: ACTIONS_TYPES.GET_MOVIE_DETAILS, payload: response.data})
+        } catch (err) {
+            dispatch({type: ACTIONS_TYPES.LOADING_FAILURE, payload: err.response.data})
+        }
+ }
+}
 
