@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
 import { ACTIONS_TYPES } from '../constants/constants'
 
 
@@ -16,11 +15,10 @@ export const logout = () => {
     sessionStorage.removeItem('user')
     return {type: ACTIONS_TYPES.LOGOUT_USER}
 }
-export const registerUser = async (body) => {
+export const registerUser = (body) => {
     return async (dispatch) => {
+        console.log('register')
         const response = await axios.post('http://localhost:3004/register', {...body,
-    firstName: 'Unknown',
-    lastName: 'Unknown',
     age: 'Unknown',
     avatar: '',
     })    
@@ -44,14 +42,20 @@ export const getMoviesByGenre = (genre) => {
 
 // // Movie
 
-export const createReview = (id, textReview, author) => {
+export const createReview = (id, textReview, date, firstName, lastName, authorId) => {
     return async (dispatch) => {
         try {
             dispatch({type: ACTIONS_TYPES.LOADING_START})
             const response = await axios.post('http://localhost:3004/reviews', {
                 imdbId: id,
                 text: textReview,
-                author: author
+                date: date,
+                author: {  
+                    firstName: firstName,
+                    lastName: lastName,
+                    id: authorId
+                }
+                
             })
             dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
         } catch (err) {
@@ -85,8 +89,18 @@ export const getMovie = (id) => {
             dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
             dispatch({type: ACTIONS_TYPES.GET_MOVIE_DETAILS, payload: response.data})
         } catch (err) {
-            dispatch({type: ACTIONS_TYPES.LOADING_FAILURE, payload: err.response.data})
+            
+            // dispatch({type: ACTIONS_TYPES.LOADING_FAILURE, payload: err.response.data})
         }
  }
+}
+export const deleteComment = (id) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.delete(`http://localhost:3004/reviews/${id}`)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 }
 

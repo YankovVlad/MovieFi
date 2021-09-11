@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -11,51 +11,76 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS_TYPES } from "../../constants/constants";
 import { registerUser } from "../../actions";
-import { EmailTwoTone } from "@material-ui/icons";
 
+import axios from "axios";
+import { IconButton } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export const RegDialog = () => {
 
     const dispatch = useDispatch()
     const open = useSelector((state) => state.registrationDialog)
-    const email = useSelector((state) => state.registrationEmail)
-    const password = useSelector((state) => state.registrationPassword)
-    const nickname = useSelector((state) => state.registrationNickname)
+    
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
 
     const onClickClose = () => {
         dispatch({type: ACTIONS_TYPES.CLOSE_DIALOG_REGISTRATION})
     }
 
-    const onChangeNickname = (event) => {
-        dispatch({type: ACTIONS_TYPES.CHANGE_NICKNAME_REGISTRATION, payload: event.target.value})
+    const onChangeFirstName = (event) => {
+        setFirstName(event.target.value)
+    }
+    const onChangeLastName = (event) => {
+        setLastName(event.target.value)
     }
     const onChangeEmail = (event) => {
-        dispatch({type: ACTIONS_TYPES.CHANGE_EMAIL_REGISTRATION, payload: event.target.value})
+        setEmail(event.target.value)
     }
     const onChangePassword = (event) => {
-        dispatch({type: ACTIONS_TYPES.CHANGE_PASSWORD_REGISTRATION, payload: event.target.value})
+        setPassword(event.target.value)
     }
     const onClickDone = () => {
-        registerUser({email: email, password: password, nickname: nickname})
-        dispatch({type: ACTIONS_TYPES.RESET_FORM_REGISTRATION})
+        dispatch(registerUser({email: email, password: password, firstName: firstName, lastName: lastName}))
+        setFirstName('')
+        setLastName('')
+        setEmail('')
+        setPassword('')
         dispatch({type: ACTIONS_TYPES.CLOSE_DIALOG_REGISTRATION})
     }
+    const onClickDeleteComment = async () => {
+        const response = await axios.delete(`http://localhost:3004/users/2`) 
+    }
+
 
  return(
     <Dialog open={open} onClose={onClickClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Registration</DialogTitle>
         <DialogContent>
-            
+    
         <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Nickname"
+            label="First name"
             type="text"
             fullWidth
-            onChange={onChangeNickname}
-            value={nickname}
+            onChange={onChangeFirstName}
+            value={firstName}
         />
+         <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Last name"
+            type="text"
+            fullWidth
+            onChange={onChangeLastName}
+            value={lastName}
+        />
+        
         <TextField
             autoFocus
             margin="dense"
@@ -85,6 +110,9 @@ export const RegDialog = () => {
             <Button onClick={onClickDone} color="primary">
                 Done
             </Button>
+            <IconButton onClick={onClickDeleteComment} color='secondary'>
+                <DeleteIcon />
+            </IconButton>
         </DialogActions>
   </Dialog>
  )

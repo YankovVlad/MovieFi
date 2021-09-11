@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import moment from 'moment'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -7,6 +7,7 @@ import { getMovie, getReview, createReview } from '../../actions'
 
 import { Container, makeStyles, Typography, Box, Grid, TextField, Button } from '@material-ui/core'
 import { Loader } from '../../components/Loader/Loader'
+import { Comment } from '../../components/Comment/Comment'
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -29,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
       fontFamily: 'Montserrat, sans-serif',
 
     },
+    button: {
+      margin: '16px 0'
+    }
     
 }))
 
@@ -49,9 +53,15 @@ export const Movie = () => {
       const onChangeReview = (event) => {
         setTextReview(event.target.value)
       }
-      const onClickButtonPost = async () => {
-        dispatch(createReview(id, textReview, user.id))
-        setTextReview('')
+      const onClickButtonPost = () => {
+        dispatch(createReview(id, textReview, moment().calendar(), user.firstName, user.lastName, user.id))
+        dispatch(getReview(id))
+        setTimeout(() => {
+          setTextReview('')
+        },100)
+        
+      }
+      const updateReview = () => {
         dispatch(getReview(id))
       }
 
@@ -120,7 +130,7 @@ export const Movie = () => {
           margin='dense'
           />
           
-           <Button margin='dense' variant="contained" color="primary" onClick={onClickButtonPost}>
+           <Button className={classes.button} variant="contained" color="secondary" onClick={onClickButtonPost}>
            Write it!
           </Button>
           </> : ''
@@ -129,11 +139,10 @@ export const Movie = () => {
             <Loader /> :
             reviews.map((review) => {
               return (
-                <Typography key={review.id} margin='dense'>{review.text}</Typography>
+                <Comment key={review.id} review={review} user={user} updateReview={updateReview}/>
               )
             })
         }
-
         </Box>
        </Container>)
       }

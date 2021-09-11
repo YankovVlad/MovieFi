@@ -4,20 +4,16 @@ const initialState = {
     loginDialog: false,
     registrationDialog: false,
 
-    registrationNickname: '',
-    registrationEmail: '',
-    registrationPassword: '',
-
     loading: false,
     loadingElement: false,
     loginEmail: '',
     loginPassword: '',
-    user: null,
+    user: {},
 
     movieList: [],
     movieDetails: {},
     reviews: [],
-    error: {}
+    error: {},
 }
 
 export const reducer = (state = initialState, action) => {
@@ -27,11 +23,6 @@ export const reducer = (state = initialState, action) => {
 
         case ACTIONS_TYPES.OPEN_DIALOG_REGISTRATION: return {...state, registrationDialog: true}
         case ACTIONS_TYPES.CLOSE_DIALOG_REGISTRATION: return {...state, registrationDialog: false}
-
-        case ACTIONS_TYPES.CHANGE_NICKNAME_REGISTRATION: return {...state, registrationNickname: action.payload}
-        case ACTIONS_TYPES.CHANGE_EMAIL_REGISTRATION: return {...state, registrationEmail: action.payload}
-        case ACTIONS_TYPES.CHANGE_PASSWORD_REGISTRATION: return {...state, registrationPassword: action.payload}
-        case ACTIONS_TYPES.RESET_FORM_REGISTRATION: return {...state, registrationNickname: '', registrationEmail: '', registrationPassword:''}
 
         case ACTIONS_TYPES.CHANGE_EMAIL_LOGIN: return {...state, loginEmail: action.payload}
         case ACTIONS_TYPES.CHANGE_PASSWORD_LOGIN: return {...state, loginPassword: action.payload}
@@ -50,6 +41,7 @@ export const reducer = (state = initialState, action) => {
         case ACTIONS_TYPES.GET_MOVIE_LIST: return {...state, movieList: action.payload}
         case ACTIONS_TYPES.GET_MOVIE_DETAILS: return {...state, movieDetails: action.payload}
         case ACTIONS_TYPES.GET_REVIEW: return {...state, reviews: action.payload}
+
     }
     return state
 }

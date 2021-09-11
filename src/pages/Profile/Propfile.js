@@ -18,7 +18,6 @@ export const Profile = (props) => {
             <Box>
                 <Typography className={classes.text}>First name: {user.firstName}</Typography>
                 <Typography className={classes.text}>Last name: {user.lastName}</Typography>
-                <Typography className={classes.text}>Nickname: {user.nickname}</Typography>
                 <Typography className={classes.text}>Email: {user.email}</Typography>
                 <Typography className={classes.text}>Age: {user.age}</Typography>
             </Box>

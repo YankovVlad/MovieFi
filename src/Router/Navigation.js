@@ -105,7 +105,7 @@ export const Navigation = () => {
                         </Container>
                         {user ? 
                         (<>
-                            <Typography>{user.nickname}</Typography>
+                            <Typography>{user.firstName} {user.lastName}</Typography>
                             <Button color="primary" onClick={onClickLogout} className={classes.button}>Log Out</Button>
                         </>
                         ) :
