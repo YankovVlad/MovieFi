@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'grey',
     }
 }))
-export const Comment = ({review, user, updateReview}) => {
+export const Comment = ({review, user, updateReview, forMovie}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const sessionUser = useSelector((state) => state.user)
@@ -44,6 +44,7 @@ export const Comment = ({review, user, updateReview}) => {
                 <Typography className={classes.text}>
                     {review.author.firstName} {review.author.lastName}
                     <Typography variant='span' className={classes.dateText}> {review.date}</Typography>
+                    {forMovie ? <Typography variant='span' className={classes.dateText}> for movie {review.movieName}</Typography> : ''}
                 </Typography>
                 <Typography variant='h6'>{review.text}</Typography>
             </Box>

@@ -42,7 +42,7 @@ export const getMoviesByGenre = (genre) => {
 
 // // Movie
 
-export const createReview = (id, textReview, date, firstName, lastName, authorId) => {
+export const createReview = (id, textReview, date, firstName, lastName, authorId, movieName) => {
     return async (dispatch) => {
         try {
             dispatch({type: ACTIONS_TYPES.LOADING_START})
@@ -54,7 +54,8 @@ export const createReview = (id, textReview, date, firstName, lastName, authorId
                     firstName: firstName,
                     lastName: lastName,
                     id: authorId
-                }
+                },
+                movieName: movieName,
                 
             })
             dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
@@ -98,6 +99,20 @@ export const deleteComment = (id) => {
     return async (dispatch) => {
         try {
             const response = await axios.delete(`http://localhost:3004/reviews/${id}`)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+// Profile
+
+export const getUserReviews = (id) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.get(`http://localhost:3004/reviews?author.id=${id}`)
+            console.log(response.data)
+            dispatch({type: ACTIONS_TYPES.GET_USER_REVIEW, payload: response.data})
         } catch (err) {
             console.log(err)
         }

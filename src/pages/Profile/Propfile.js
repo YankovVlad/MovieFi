@@ -1,25 +1,59 @@
 import { Container, makeStyles, Typography, Box, Button } from "@material-ui/core";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Comment } from '../../components/Comment/Comment'
+import { getUserReviews } from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
-    text: {
-        
-    }
+   boxElement: {
+       padding:'1rem',
+       margin: '1rem 0',
+       border: '1px solid black',
+       borderRadius: '10px'
+   },
+   title: {
+       margin: '1rem 0'
+   }
 }))
 
 export const Profile = (props) => {
+    const dispatch = useDispatch()
     const classes = useStyles()
     const user = useSelector((state) => state.user)
+    const reviews = useSelector((state) => state.userReviews)
 
-    return(
+    const updateReview = () => {
+        setTimeout(() => {
+            dispatch(getUserReviews(user.id))
+        }, 300)
+    }
+
+    useEffect(() => {
+        dispatch(getUserReviews(user?.id))
+    }, [dispatch, user])
+
+    return (
         <Container>
             {user ? 
-            <Box>
-                <Typography className={classes.text}>First name: {user.firstName}</Typography>
-                <Typography className={classes.text}>Last name: {user.lastName}</Typography>
-                <Typography className={classes.text}>Email: {user.email}</Typography>
-                <Typography className={classes.text}>Age: {user.age}</Typography>
+            <Box >
+                <Typography variant='h5' className={classes.title}>Personal data</Typography>
+                <Box className={classes.boxElement}>
+                    <Typography className={classes.text}>First name: {user.firstName}</Typography>
+                    <Typography className={classes.text}>Last name: {user.lastName}</Typography>
+                    <Typography className={classes.text}>Email: {user.email}</Typography>
+                    <Typography className={classes.text}>Age: {user.age}</Typography>
+                </Box>
+
+                <Typography variant='h5' className={classes.title}>Your reviews</Typography>
+                <Box className={classes.boxElement}>
+                    {reviews.map((review) => {
+                        return (
+                            <Comment key={review.id} review={review} user={user} updateReview={updateReview} forMovie/>
+                        )
+                    })}
+                </Box>
+               
             </Box>
             : 
             <Box>

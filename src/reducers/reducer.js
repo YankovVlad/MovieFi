@@ -13,6 +13,7 @@ const initialState = {
     movieList: [],
     movieDetails: {},
     reviews: [],
+    userReviews: [],
     error: {},
 }
 
@@ -41,6 +42,7 @@ export const reducer = (state = initialState, action) => {
         case ACTIONS_TYPES.GET_MOVIE_LIST: return {...state, movieList: action.payload}
         case ACTIONS_TYPES.GET_MOVIE_DETAILS: return {...state, movieDetails: action.payload}
         case ACTIONS_TYPES.GET_REVIEW: return {...state, reviews: action.payload}
+        case ACTIONS_TYPES.GET_USER_REVIEW: return {...state, userReviews: action.payload}
 
     }
     return state

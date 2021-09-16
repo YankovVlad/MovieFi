@@ -54,11 +54,11 @@ export const Movie = () => {
         setTextReview(event.target.value)
       }
       const onClickButtonPost = () => {
-        dispatch(createReview(id, textReview, moment().calendar(), user.firstName, user.lastName, user.id))
-        dispatch(getReview(id))
+        dispatch(createReview(id, textReview, moment().calendar(), user.firstName, user.lastName, user.id, movieDetails.Title))
+        setTextReview('')
         setTimeout(() => {
-          setTextReview('')
-        },100)
+          dispatch(getReview(id))
+        },300)
         
       }
       const updateReview = () => {
