@@ -3,6 +3,7 @@ import { ACTIONS_TYPES } from "../constants/constants"
 const initialState = {
     loginDialog: false,
     registrationDialog: false,
+    changeDialog: false,
 
     loading: false,
     loadingElement: false,
@@ -24,6 +25,9 @@ export const reducer = (state = initialState, action) => {
 
         case ACTIONS_TYPES.OPEN_DIALOG_REGISTRATION: return {...state, registrationDialog: true}
         case ACTIONS_TYPES.CLOSE_DIALOG_REGISTRATION: return {...state, registrationDialog: false}
+
+        case ACTIONS_TYPES.OPEN_DIALOG_CHANGE: return {...state, changeDialog: true}
+        case ACTIONS_TYPES.CLOSE_DIALOG_CHANGE: return {...state, changeDialog: false}
 
         case ACTIONS_TYPES.CHANGE_EMAIL_LOGIN: return {...state, loginEmail: action.payload}
         case ACTIONS_TYPES.CHANGE_PASSWORD_LOGIN: return {...state, loginPassword: action.payload}

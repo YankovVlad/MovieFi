@@ -49,7 +49,7 @@ export const Comment = ({review, user, updateReview, forMovie}) => {
                 <Typography variant='h6'>{review.text}</Typography>
             </Box>
             {user ? (review.author.id === sessionUser?.id ? 
-             <IconButton onClick={onClickDeleteComment} color='secondary'>
+            <IconButton onClick={onClickDeleteComment} color='secondary'>
                 <DeleteIcon />
             </IconButton> : '') : ''
             }

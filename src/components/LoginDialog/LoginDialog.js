@@ -1,15 +1,20 @@
 import React, { useEffect } from "react"
-import axios from "axios";
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import Slide from '@material-ui/core/Slide';
+
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS_TYPES } from "../../constants/constants";
+import { loginUser } from "../../actions";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="down" ref={ref} {...props} />;
+  });
 
 
 export const LoginDialog = () => {
@@ -18,14 +23,6 @@ export const LoginDialog = () => {
     const open = useSelector((state) => state.loginDialog)
     const email = useSelector((state) => state.loginEmail)
     const password = useSelector((state) => state.loginPassword)
-
-    const loginUser = async (body) => {
-        const response = await axios.post('http://localhost:3004/login', body).then((response)=> {
-            dispatch({type: ACTIONS_TYPES.AUTH_USER, payload: response.data.user})
-            sessionStorage.setItem('jwt', JSON.stringify(response.data.accessToken))
-            sessionStorage.setItem('user', JSON.stringify(response.data.user))
-        })
-    }
 
     const onClickClose = () => {
         dispatch({type: ACTIONS_TYPES.CLOSE_DIALOG_LOGIN})
@@ -37,7 +34,7 @@ export const LoginDialog = () => {
         dispatch({type: ACTIONS_TYPES.CHANGE_PASSWORD_LOGIN, payload: event.target.value})
     }
     const onClickDone = () => {
-        loginUser({email: email, password: password})
+        dispatch(loginUser({email: email, password: password}))
         dispatch({type: ACTIONS_TYPES.RESET_FORM_LOGIN})
         dispatch({type: ACTIONS_TYPES.CLOSE_DIALOG_LOGIN})
     }
@@ -48,7 +45,7 @@ export const LoginDialog = () => {
 
 
  return(
-    <Dialog open={open} onClose={onClickClose} aria-labelledby="form-dialog-title">
+    <Dialog open={open} onClose={onClickClose} aria-labelledby="form-dialog-title" TransitionComponent={Transition}>
         <DialogTitle id="form-dialog-title">Log In</DialogTitle>
         <DialogContent>
             

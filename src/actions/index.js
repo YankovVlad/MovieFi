@@ -10,6 +10,19 @@ export const openLogin = () => {
 export const openRegistration = () => {
     return {type: ACTIONS_TYPES.OPEN_DIALOG_REGISTRATION}
 }
+export const loginUser = (body) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.post('http://localhost:3004/login', body).then((response)=> {
+            dispatch({type: ACTIONS_TYPES.AUTH_USER, payload: response.data.user})
+            sessionStorage.setItem('jwt', JSON.stringify(response.data.accessToken))
+            sessionStorage.setItem('user', JSON.stringify(response.data.user))
+        })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
 export const logout = () => {
     sessionStorage.removeItem('jwt')
     sessionStorage.removeItem('user')
@@ -118,4 +131,20 @@ export const getUserReviews = (id) => {
         }
     }
 }
-
+export const openChangeDialog = () => {
+    return {type: ACTIONS_TYPES.OPEN_DIALOG_CHANGE}
+}
+export const closeChangeDialog = () => {
+    return {type: ACTIONS_TYPES.CLOSE_DIALOG_CHANGE}
+}
+export const changePersonalData = (id, body) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.patch(`http://localhost:3004/users/${id}`, body)
+            console.log(response.data)
+            dispatch({type: ACTIONS_TYPES.AUTH_USER, payload: response.data})
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
