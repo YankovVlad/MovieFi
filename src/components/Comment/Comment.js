@@ -2,7 +2,7 @@
 import { Box, IconButton, Typography } from '@material-ui/core'
 import { deleteComment} from '../../actions';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { makeStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
 

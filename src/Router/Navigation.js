@@ -9,13 +9,13 @@ import {
 
 import { AppBar, Box, Container, Button, Toolbar, Typography } from "@material-ui/core";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/styles";
 
 import { Homepage } from "../pages/Homepage/Homepage";
 import { MovieList } from "../pages/MovieList/MovieList.js";
 import { Movie } from "../pages/Movie/Movie";
 import { AboutUs } from "../pages/AboutUs/AboutUs";
-import { Profile } from "../pages/Profile/Propfile";
+import { Profile } from "../pages/Profile/Profile";
 import { LoginDialog } from "../components/LoginDialog/LoginDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS_TYPES } from "../constants/constants";

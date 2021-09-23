@@ -4,6 +4,7 @@ import { categories } from './data'
 
 import React from 'react'
 import { Container, Box, Typography, TextField, Grid, Paper } from '@material-ui/core';
+import { AutocompleteSearch } from '../../components/AutocompleteSearch/AutocompleteSearch';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
 
@@ -43,6 +44,7 @@ export const Homepage = () => {
                     </Typography>
 
                 </Box>
+                <AutocompleteSearch />
             </Container>
             <Container className={classes.container}>
 
