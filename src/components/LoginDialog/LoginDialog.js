@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -6,9 +7,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Slide from '@material-ui/core/Slide';
-
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useDispatch, useSelector } from "react-redux";
+
 import { ACTIONS_TYPES } from "../../constants/constants";
 import { loginUser } from "../../actions";
 
@@ -41,7 +41,7 @@ export const LoginDialog = () => {
 
     useEffect(() => {
         dispatch({type: ACTIONS_TYPES.AUTH_USER, payload: JSON.parse(sessionStorage.getItem('user'))})
-    },[])
+    },[dispatch])
 
 
  return(
@@ -49,35 +49,35 @@ export const LoginDialog = () => {
         <DialogTitle id="form-dialog-title">Log In</DialogTitle>
         <DialogContent>
             
-        <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            onChange={onChangeEmail}
-            value={email}
-        />
-        <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Password"
-            type="password"
-            fullWidth
-            onChange={onChangePassword}
-            value={password}
-        />
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Email Address"
+                type="email"
+                fullWidth
+                onChange={onChangeEmail}
+                value={email}
+            />
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Password"
+                type="password"
+                fullWidth
+                onChange={onChangePassword}
+                value={password}
+            />
         </DialogContent>
         <DialogActions>
-            <Button onClick={onClickClose} color="primary">
+            <Button onClick={onClickClose} color="primary" variant="outlined">
                 Cancel
             </Button>
-            <Button onClick={onClickDone} color="primary">
+            <Button onClick={onClickDone} color="primary" variant="contained">
                 Done
             </Button>
         </DialogActions>
-  </Dialog>
- )
+    </Dialog>
+    )
 }

@@ -11,6 +11,7 @@ const initialState = {
     loginPassword: '',
     user: {},
 
+    movies: [],
     movieList: [],
     movieDetails: {},
     reviews: [],
@@ -43,6 +44,7 @@ export const reducer = (state = initialState, action) => {
         case ACTIONS_TYPES.LOADING_ELEMENT_SUCCESS: return {...state, loadingElement: false}
         case ACTIONS_TYPES.LOADING_ELEMENT_FAILURE: return {...state, loadingElement: false, errorElement: action.payload}
 
+        case ACTIONS_TYPES.GET_MOVIES: return {...state, movies: action.payload}
         case ACTIONS_TYPES.GET_MOVIE_LIST: return {...state, movieList: action.payload}
         case ACTIONS_TYPES.GET_MOVIE_DETAILS: return {...state, movieDetails: action.payload}
         case ACTIONS_TYPES.GET_REVIEW: return {...state, reviews: action.payload}

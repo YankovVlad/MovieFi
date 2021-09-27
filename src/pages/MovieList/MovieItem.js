@@ -1,55 +1,45 @@
-import { Container, Box, Typography, Grid, Paper, Card, CardActionArea, CardMedia, CardContent } from '@material-ui/core';
-import { Link } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core';
 
-const useStyle = makeStyles((theme) => ({
-    card: {
-        width: '100%',
-        maxHeight: '400px'
-    },
-    media: {
-        minHeight:'300px',
-    },
-    content: {
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    },
-    text: {
-        fontFamily: 'Montserrat, sans-serif',
-        fontSize:'16px',
-        color: 'white'
-    },
-    subtext: {
-        fontFamily: 'Montserrat, sans-serif',
-        fontSize: '12px',
-        color: 'white'
-    }
-}))
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
+import { Typography, Grid, Card, CardActionArea, CardMedia, CardContent } from '@material-ui/core';
+import { Text } from '../../components/Text/Text'
+import { Link } from 'react-router-dom'
+
+const theme = createTheme(); 
+    
+const Subtext = styled(Typography)(({ theme }) => ({
+    fontSize: '0.8rem',
+    fontFamily: 'Montserrat, sans-serif',
+    color: 'white'
+    }));
 
 export const MovieItem = ({movie}) => {
-    const classes = useStyle()
 
     return (
-        <Grid item xs={6} sm={3} className={classes.item}>
+        <ThemeProvider theme={theme}>
+            <Grid item xs={12} sm={4}>
             <Link to={`/movie/${movie.imdb_id}`} style={{textDecoration: 'none'}}>
 
-                <Card className={classes.card}>
+                <Card sx={{width: '100%', maxHeight: '550px'}}>
                     <CardActionArea>
-                        <CardMedia image={movie.poster} className={classes.media} />
+                        <CardMedia image={movie.poster} sx={{minHeight:'400px'}} />
                     </CardActionArea>
-                    <CardContent className={classes.content}>
-                        <Typography className={classes.text}>
+                    <CardContent sx={{backgroundColor: '#BD1616', minHeight: '260px'}}>
+                        <Text sx={{color:'white'}}>
                             {movie.title}
-                        </Typography>
-                        <Typography className={classes.subtext}>
+                        </Text>
+                        <Subtext >
                             {movie.genre}
-                        </Typography>
-                        <Typography className={classes.subtext}>
+                        </Subtext>
+                        <Subtext >
                             {movie.year}
-                        </Typography>
+                        </Subtext>
                     
                     </CardContent>
                 </Card>
             </Link>
         </Grid>
+        </ThemeProvider>
+        
     )
 }

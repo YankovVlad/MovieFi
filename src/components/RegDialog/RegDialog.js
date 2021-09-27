@@ -1,4 +1,6 @@
 import React, { useState } from "react"
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -7,15 +9,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { IconButton } from "@material-ui/core";
 
-
-import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS_TYPES } from "../../constants/constants";
 import { registerUser } from "../../actions";
-
-import axios from "axios";
-import { IconButton } from "@material-ui/core";
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
@@ -56,69 +54,59 @@ export const RegDialog = () => {
         setPassword('')
         dispatch({type: ACTIONS_TYPES.CLOSE_DIALOG_REGISTRATION})
     }
-    const onClickDeleteComment = async () => {
-        const response = await axios.delete(`http://localhost:3004/users/2`) 
-    }
-
 
  return(
     <Dialog open={open} onClose={onClickClose} aria-labelledby="form-dialog-title" TransitionComponent={Transition}>
         <DialogTitle id="form-dialog-title">Registration</DialogTitle>
         <DialogContent>
-    
-        <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="First name"
-            type="text"
-            fullWidth
-            onChange={onChangeFirstName}
-            value={firstName}
-        />
-         <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Last name"
-            type="text"
-            fullWidth
-            onChange={onChangeLastName}
-            value={lastName}
-        />
-        
-        <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            onChange={onChangeEmail}
-            value={email}
-        />
-        <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Password"
-            type="password"
-            fullWidth
-            onChange={onChangePassword}
-            value={password}
-        />
-        
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="First name"
+                type="text"
+                fullWidth
+                onChange={onChangeFirstName}
+                value={firstName}
+            />
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Last name"
+                type="text"
+                fullWidth
+                onChange={onChangeLastName}
+                value={lastName}
+            />
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Email Address"
+                type="email"
+                fullWidth
+                onChange={onChangeEmail}
+                value={email}
+            />
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Password"
+                type="password"
+                fullWidth
+                onChange={onChangePassword}
+                value={password}
+            />
         </DialogContent>
         <DialogActions>
-            <Button onClick={onClickClose} color="primary">
+            <Button onClick={onClickClose} color="primary" variant="outlined">
                 Cancel
             </Button>
-            <Button onClick={onClickDone} color="primary">
+            <Button onClick={onClickDone} color="primary" variant="contained">
                 Done
             </Button>
-            <IconButton onClick={onClickDeleteComment} color='secondary'>
-                <DeleteIcon />
-            </IconButton>
         </DialogActions>
   </Dialog>
  )

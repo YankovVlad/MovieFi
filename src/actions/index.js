@@ -30,15 +30,43 @@ export const logout = () => {
 }
 export const registerUser = (body) => {
     return async (dispatch) => {
-        console.log('register')
-        const response = await axios.post('http://localhost:3004/register', {...body,
-    age: 'Unknown',
-    avatar: '',
-    })    
+        try {
+            const response = await axios.post('http://localhost:3004/register', {...body,
+            age: 'Unknown',
+            avatar: '',
+        })
+        } catch (err) {
+            console.log(err)
+        }
     }
 }
 
 // MovieList
+export const getMovies = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: ACTIONS_TYPES.LOADING_START})
+            const response = await axios.get('http://localhost:3004/movies')
+            dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
+            dispatch({type: ACTIONS_TYPES.GET_MOVIES, payload: response.data})
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+export const getMovieByTitle = (value) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: ACTIONS_TYPES.LOADING_START})
+            const response = await axios.get(`http://localhost:3004/movies?title_like=${value}`)
+            dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
+            dispatch({type: ACTIONS_TYPES.GET_MOVIE_LIST, payload: response.data})
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
 
 export const getMoviesByGenre = (genre) => {
     return async (dispatch) => {
@@ -48,7 +76,7 @@ export const getMoviesByGenre = (genre) => {
             dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
             dispatch({type: ACTIONS_TYPES.GET_MOVIE_LIST, payload: response.data})
         } catch (err) {
-            dispatch({type: ACTIONS_TYPES.LOADING_FAILURE, payload: err.response.data})
+           console.log(err)
         }
     } 
 } 
@@ -73,7 +101,7 @@ export const createReview = (id, textReview, date, firstName, lastName, authorId
             })
             dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
         } catch (err) {
-            dispatch({type: ACTIONS_TYPES.LOADING_FAILURE, payload: err.response.data})
+            console.log(err)
         }
     }
 }
@@ -83,7 +111,7 @@ export const getReview = (id) => {
             const response = await axios.get(`http://localhost:3004/reviews?imdbId=${id}`)
             dispatch({type: ACTIONS_TYPES.GET_REVIEW, payload: response.data.reverse()})
         } catch (err) {
-            dispatch({type: ACTIONS_TYPES. LOADING_ELEMENT_FAILURE, payload: err.response.data})
+            console.log(err)
         }
     }
 }
@@ -103,8 +131,7 @@ export const getMovie = (id) => {
             dispatch({type: ACTIONS_TYPES.LOADING_SUCCESS})
             dispatch({type: ACTIONS_TYPES.GET_MOVIE_DETAILS, payload: response.data})
         } catch (err) {
-            
-            // dispatch({type: ACTIONS_TYPES.LOADING_FAILURE, payload: err.response.data})
+            console.log(err)
         }
  }
 }
