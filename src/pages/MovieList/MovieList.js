@@ -29,7 +29,7 @@ export const MovieList = () => {
                 {loading ?
                     <Loader/> 
                     :
-                    <Grid container spacing={2}>
+                    <Grid container spacing={2} sx={{margin: '1rem 0'}}>
                         {movies?.map(movie => {
                             return (
                             <MovieItem key={movie.imdb_id} movie={movie} />

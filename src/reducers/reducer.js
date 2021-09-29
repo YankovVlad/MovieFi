@@ -16,7 +16,8 @@ const initialState = {
     movieDetails: {},
     reviews: [],
     userReviews: [],
-    error: {},
+    error: '',
+    visibilityError: false
 }
 
 export const reducer = (state = initialState, action) => {
@@ -38,7 +39,11 @@ export const reducer = (state = initialState, action) => {
 
         case ACTIONS_TYPES.LOADING_START: return {...state, loading: true}
         case ACTIONS_TYPES.LOADING_SUCCESS: return {...state, loading: false}
-        case ACTIONS_TYPES.LOADING_FAILURE: return {...state, loading: false, error: action.payload}
+
+        case ACTIONS_TYPES.ERROR: return {...state, loading: false, error: action.payload}
+        case ACTIONS_TYPES.RESET_ERROR: return {...state, error: ''}
+        case ACTIONS_TYPES.VISIBILITY_ERROR_ON: return {...state, visibilityError: true}
+        case ACTIONS_TYPES.VISIBILITY_ERROR_OFF: return {...state, visibilityError: false}
 
         case ACTIONS_TYPES.LOADING_ELEMENT_START: return {...state, loadingElement: true}
         case ACTIONS_TYPES.LOADING_ELEMENT_SUCCESS: return {...state, loadingElement: false}

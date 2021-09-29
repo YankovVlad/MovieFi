@@ -9,7 +9,7 @@ import { getUserReviews } from '../../../actions'
 
 export const PersonalReviews = ({user}) => {
     const dispatch = useDispatch()
-    const reviews = useSelector((state) => state.userReviews)
+    const userReviews = useSelector((state) => state.userReviews)
 
     const updateReview = () => {
         setTimeout(() => {
@@ -25,7 +25,7 @@ export const PersonalReviews = ({user}) => {
                 border: '1px solid black',
                 borderRadius: '10px',
             }}>
-                {reviews.map((review) => {
+                {userReviews.map((review) => {
                     return (
                         <Comment key={review.id} review={review} user={user} updateReview={updateReview} forMovie/>
                     )

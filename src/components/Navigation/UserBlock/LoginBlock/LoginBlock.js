@@ -16,7 +16,7 @@ export const LoginBlock = ({onClickOpenLogin, onClickOpenRegistration}) => {
                 color="error" 
                 onClick={onClickOpenRegistration} 
                 sx={{fontFamily: 'Montserrat, sans-serif', margin: '0 1rem', padding: '8px 0'}}>
-                Sign In
+                Sign Up
             </Button>
         </>
     )

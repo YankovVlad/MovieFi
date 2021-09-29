@@ -8,6 +8,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Slide from '@material-ui/core/Slide';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Box from '@material-ui/core/Box'
+import { Text } from "../Text/Text";
+import { CircularProgress } from "@material-ui/core"
+import LinearProgress from '@mui/material/LinearProgress';
 
 import { ACTIONS_TYPES } from "../../constants/constants";
 import { loginUser } from "../../actions";
@@ -23,6 +27,9 @@ export const LoginDialog = () => {
     const open = useSelector((state) => state.loginDialog)
     const email = useSelector((state) => state.loginEmail)
     const password = useSelector((state) => state.loginPassword)
+    const loading = useSelector((state) => state.loading)
+    const error = useSelector((state) => state.error)
+    const visibilityError = useSelector((state) => state.visibilityError)
 
     const onClickClose = () => {
         dispatch({type: ACTIONS_TYPES.CLOSE_DIALOG_LOGIN})
@@ -35,8 +42,6 @@ export const LoginDialog = () => {
     }
     const onClickDone = () => {
         dispatch(loginUser({email: email, password: password}))
-        dispatch({type: ACTIONS_TYPES.RESET_FORM_LOGIN})
-        dispatch({type: ACTIONS_TYPES.CLOSE_DIALOG_LOGIN})
     }
 
     useEffect(() => {
@@ -45,9 +50,9 @@ export const LoginDialog = () => {
 
 
  return(
-    <Dialog open={open} onClose={onClickClose} aria-labelledby="form-dialog-title" TransitionComponent={Transition}>
-        <DialogTitle id="form-dialog-title">Log In</DialogTitle>
-        <DialogContent>
+    <Dialog open={open} onClose={onClickClose} aria-labelledby="form-dialog-title" TransitionComponent={Transition} >
+        <DialogTitle  id="form-dialog-title">Log In</DialogTitle>
+        <DialogContent >
             
             <TextField
                 autoFocus
@@ -58,6 +63,7 @@ export const LoginDialog = () => {
                 fullWidth
                 onChange={onChangeEmail}
                 value={email}
+                
             />
             <TextField
                 autoFocus
@@ -69,6 +75,10 @@ export const LoginDialog = () => {
                 onChange={onChangePassword}
                 value={password}
             />
+            <Text 
+                sx={visibilityError ? {height: '1rem 0', color: 'red'}:{height: '1rem 0', color:'white'}}>
+                {error}
+            </Text>
         </DialogContent>
         <DialogActions>
             <Button onClick={onClickClose} color="primary" variant="outlined">
@@ -78,6 +88,13 @@ export const LoginDialog = () => {
                 Done
             </Button>
         </DialogActions>
+        <Box sx={{width:'100%', height: '4px'}}>
+        {loading ?
+            <LinearProgress />
+            :
+            ''}
+        </Box>
+            
     </Dialog>
     )
 }

@@ -29,17 +29,17 @@ export const ChangeDialog = ({isOpen}) => {
       dispatch(closeChangeDialog())
     };
 
-    const onChangeFirstName = (event) => {
-      setFirstName(event.target.value)
-    }
-    const onChangeLastName = (event) => {
-      setLastName(event.target.value)
-    }
-    const onChangeAge = (event) => {
-      setAge(event.target.value)
-    }
-    const onChangeFavoriteGenre = (event) => {
-      setFavoriteGenres(event.target.value)
+    const onChangeInput = (event) => {
+      switch (event.target.name) {
+        case 'firstName': setFirstName(event.target.value)
+        break;
+        case 'lastName': setLastName(event.target.value)
+        break;
+        case 'age': setAge(event.target.value)
+        break;
+        case 'favoriteGenres': setFavoriteGenres(event.target.value)
+        break;
+      }
     }
     const onClickSave = () => {
       dispatch(changePersonalData(user.id, {
@@ -67,41 +67,41 @@ export const ChangeDialog = ({isOpen}) => {
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                name="firstName"
                 label="First name"
                 type="text"
                 value={firstName}
-                onChange={onChangeFirstName}
+                onChange={onChangeInput}
                 fullWidth
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                name="lastName"
                 label="Last name"
                 type="text"
                 value={lastName}
-                onChange={onChangeLastName}
+                onChange={onChangeInput}
                 fullWidth
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                name="age"
                 label="Age"
                 type="number"
                 value={age}
-                onChange={onChangeAge}
+                onChange={onChangeInput}
                 fullWidth
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                name="favoriteGenres"
                 label="Favorite genres"
                 type="text"
                 value={favoriteGenres}
-                onChange={onChangeFavoriteGenre}
+                onChange={onChangeInput}
                 fullWidth
               />
             </DialogContent>

@@ -7,6 +7,7 @@ import { Text } from '../Text/Text';
 import { Title } from '../Title/Title';
 import { deleteComment} from '../../actions';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { useParams } from 'react-router';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,10 +33,11 @@ const DateText = styled(Typography)(({theme}) => ({
 export const Comment = ({review, user, updateReview, forMovie}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const movieId = useParams()
     const sessionUser = useSelector((state) => state.user)
 
     const onClickDeleteComment = () => {
-        dispatch(deleteComment(review.id))
+        dispatch(deleteComment(review.id, movieId))
         updateReview()
     }
 
