@@ -1,9 +1,13 @@
+import { makeStyles } from '@material-ui/styles';
+import { styled } from '@material-ui/styles';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, IconButton, Typography } from '@material-ui/core'
+import { Text } from '../Text/Text';
+import { Title } from '../Title/Title';
 import { deleteComment} from '../../actions';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { makeStyles } from '@material-ui/core'
-import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,40 +20,39 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '5px'
     },
     commentTextBody: {
-        padding: '0 5px'
+        padding: '0 1rem'
     },
-    text: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    dateText: {
-        marginLeft: '16px',
-        fontSize: '12px',
-        color: 'grey',
-    }
+    
 }))
+
+const DateText = styled(Typography)(({theme}) => ({
+    color: 'grey',
+    fontFamily: 'Montserrat, sans-serif'
+}))
+
 export const Comment = ({review, user, updateReview, forMovie}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const movieId = useParams()
     const sessionUser = useSelector((state) => state.user)
 
     const onClickDeleteComment = () => {
-        dispatch(deleteComment(review.id))
+        dispatch(deleteComment(review.id, movieId))
         updateReview()
     }
 
     return (
         <Box className={classes.commentBody} >
             <Box className={classes.commentTextBody}>
-                <Typography className={classes.text}>
+                <Text>
                     {review.author.firstName} {review.author.lastName}
-                    <Typography variant='span' className={classes.dateText}> {review.date}</Typography>
-                    {forMovie ? <Typography variant='span' className={classes.dateText}> for movie {review.movieName}</Typography> : ''}
-                </Typography>
-                <Typography variant='h6'>{review.text}</Typography>
+                    <DateText style={{margin: '0 1rem'}} variant='subtitle2' > {review.date}</DateText>
+                    {forMovie ? <DateText variant='subtitle2'> for movie {review.movieName}</DateText> : ''}
+                </Text>
+                <Text variant='h6'>{review.text}</Text>
             </Box>
             {user ? (review.author.id === sessionUser?.id ? 
-            <IconButton onClick={onClickDeleteComment} color='secondary'>
+            <IconButton onClick={onClickDeleteComment} color='error'>
                 <DeleteIcon />
             </IconButton> : '') : ''
             }
